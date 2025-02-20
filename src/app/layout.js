@@ -14,8 +14,8 @@ const roboto = Roboto({
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${roboto.className} bg-slate-900`}>
-{children}
+      <body className={`${roboto.className} bg-slate-900 text-neutral-50`}>
+        {children}
       </body>
     </html>
   );

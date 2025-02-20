@@ -4,7 +4,7 @@ import React from 'react'
 
 const Header = () => {
   return (
-    <div className='flex justify-between items-center'>
+    <div className='flex justify-between items-center mt-4'>
       <div className='flex items-center'>
         <Image
           src={"/logo.svg"}
