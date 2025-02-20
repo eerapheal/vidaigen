@@ -1,6 +1,5 @@
-import { Geist, Geist_Mono, Roboto } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
-
 
 export const metadata = {
   title: "Create Next App",
@@ -12,14 +11,11 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 
-
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={roboto.className}
-      >
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${roboto.className} bg-slate-900`}>
+{children}
       </body>
     </html>
   );
