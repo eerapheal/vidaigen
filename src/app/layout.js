@@ -1,6 +1,7 @@
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import Provider from "./Provider";
+import ConvexClientProvider from "./ConvexClientProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -16,9 +17,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={`${roboto.className} bg-slate-900 text-neutral-50`}>
-        <Provider>
-          {children}
-        </Provider>
+        <ConvexClientProvider>{children}</ConvexClientProvider>
       </body>
     </html>
   );
