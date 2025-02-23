@@ -18,7 +18,7 @@ const Header = () => {
           width={40}
           height={40}
         />
-        <h2 className='text-3xl font-bold text-neutral-50'>VIDGENAI</h2>
+        <h2 className='text-3xl font-bold text-neutral-50'>SyllaAI</h2>
       </div>
       <div>
         {!user ? <Authentication>
