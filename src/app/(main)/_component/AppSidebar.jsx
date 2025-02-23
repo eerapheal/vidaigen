@@ -67,8 +67,8 @@ const AppSidebar = () => {
                 <Button className="text-lg text-center w-full">+Create Video</Button>
               </div>
               <SidebarMenu>
-                <SidebarMenuItem className="mt-3">
-                  {MenuItems.map((menu, index) => (<SidebarMenuItem>
+                {MenuItems.map((menu, index) => (
+                  <SidebarMenuItem className="mt-3" key={index}>
                     <SidebarMenuButton isActive={path == menu.url} className="">
                       <Link
                         href={menu.url}
@@ -79,8 +79,7 @@ const AppSidebar = () => {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                  ))}
-                </SidebarMenuItem>
+                ))}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
