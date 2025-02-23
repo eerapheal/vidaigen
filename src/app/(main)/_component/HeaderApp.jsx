@@ -9,7 +9,7 @@ const HeaderApp = () => {
   return (
     <div className='flex justify-between items-center p-3'>
       <SidebarTrigger />
-      <Image src={user?.photoURL} alt="user logo" width={40} height={40} className='rounded-full' />
+      <Image src={user?.pictureURL} alt="user logo" width={40} height={40} className='rounded-full' />
     </div>
   )
 }

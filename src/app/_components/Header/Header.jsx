@@ -32,7 +32,7 @@ const Header = () => {
                 Dashboard
               </Button>
             </Link>
-            <Image src={user?.photoURL} alt="user logo" width={50} height={50} className='rounded-full' />
+            <Image src={user?.pictureURL} alt="user logo" width={50} height={50} className='rounded-full' />
           </div>}
       </div>
     </div>
