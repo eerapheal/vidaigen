@@ -13,15 +13,17 @@ export const CreateNewUsers = mutation({
       .query("users")
       .filter((q) => q.eq("email", args.email))
       .collect();
-    // create a new account if it doesn't exist
-    if (!user[0]?.email) {
-      const result = await ctx.db.insert("users", {
+
+      const userData = {
         name: args.name,
         email: args.email,
         pictureURL: args.pictureURL,
         credits: 1000,
-      });
-      return result;
+      }
+    // create a new account if it doesn't exist
+    if (!user[0]?.email) {
+      const result = await ctx.db.insert("users", userData);
+      return userData;
     }
     return user[0];
   },

@@ -20,7 +20,8 @@ const Provider = ({ children }) => {
             name: user.displayName,
             email: user.email,
             pictureURL: user.photoURL,
-        })
+        });
+        setUser(result);
       },
       (error) => {
         console.error("Authentication error:", error);
