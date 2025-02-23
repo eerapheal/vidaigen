@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button'
 import { Gem, HomeIcon, LucideFileVideo, Search, WalletCards } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useAuthContext } from '@/app/Provider'
 
 
 const MenuItems = [
@@ -42,7 +43,7 @@ const MenuItems = [
 ]
 const AppSidebar = () => {
   const path = usePathname();
-
+  const {user} = useAuthContext();
   return (
     <div className="">
       <Sidebar className="">
@@ -89,7 +90,7 @@ const AppSidebar = () => {
           <div className='border rounded-xl m-6 p-3 bg-slate-300'>
             <div className='flex justify-between items-center text-lg'>
               <Gem />
-              <h2>10 Credits left</h2>
+              <h2>{user?.credits}</h2>
             </div>
             <Button className="w-full mt-3">Buy more Credits</Button>
           </div>
