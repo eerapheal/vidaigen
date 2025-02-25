@@ -2,12 +2,10 @@ import { NextResponse } from "next/server";
 import { chatSession } from "../../../../config/AiModels";
 
 const SCRIPT_PROMPT = `
-write a two deferent script for 30 seconds video on the topic: {topic}
-
+write a two different script for 30 seconds video on Topic: {topic}
 do not add Scene description
-
+Do not add anything in Braces, just return the plain story in text
 Give me a response in JSON format and follow the schema
-
 {scripts: [
 {
 content: ""

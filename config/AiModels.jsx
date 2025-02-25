@@ -26,13 +26,13 @@ const chatSession = model.startChat({
     {
       role: "user",
       parts: [
-        { text: "const SCRIPT_PROMPT = `\nwrite a two deferent script for 30 seconds video using this topic: Revolution of AI\n\ndo not add Scene description\n\nGive me a response in JSON format and follow the schema\n\n-{scripts: [\n{\ncontent: \"\"\n}\n],\n},\n`" },
+        {text: "write a two different script for 30 seconds video on Topic: kids Story.\n\ndo not add Scene description\nDo not add anthing in Braces, just return the plain story in text\nGive me a response in JSON format and follow the schema\n\n-{scripts: [\n{\ncontent: \"\"\n}\n],\n},\n"},
       ],
     },
     {
       role: "model",
       parts: [
-        { text: "```json\n{\n  \"scripts\": [\n    {\n      \"content\": \"**(Upbeat, futuristic music starts)**\\n**(Voiceover, energetic):** AI. It's not just sci-fi anymore. It's revolutionizing everything!\\n**(Quick cuts of AI in action: medical diagnosis, self-driving cars, art generation)**\\n**(Voiceover):** From healthcare to transportation to creativity, AI is making the impossible, possible.\\n**(Text on screen: The AI Revolution: Here and Now)**\\n**(Voiceover):** Are you ready for the future?\\n**(Company logo or brand with tagline. Music fades.)**\"\n    },\n    {\n      \"content\": \"**(Start with a question mark graphic flickering on screen. Then transition to complex algorithms visualizing on the screen. Music: Curious, questioning.)**\\n**(Voiceover, thoughtful):** What if we could solve the world's biggest problems...faster?\\n**(Show brief examples of problems AI could solve: climate change, poverty, disease.)**\\n**(Voiceover):** AI is offering new solutions, new perspectives, a whole new way of thinking.\\n**(Show a human and a robot hand coming together.)**\\n**(Voiceover):** It's not about replacing us, it's about empowering us.\\n**(Text on screen: AI: Solving Tomorrow's Problems, Today.)**\\n**(Music swells. Company logo or brand with a call to action. Music fades.)**\"\n    }\n  ]\n}\n```" },
+        {text: "```json\n{\n  \"scripts\": [\n    {\n      \"content\": \"Once upon a time, lived a tiny little snail named Shelly. Shelly dreamed of seeing the world, but she was so slow! One sunny morning, a big friendly ladybug offered Shelly a ride. Zoom! Together, they soared over fields of flowers, all the way to the sparkling sea. Shelly giggled, 'The world is amazing!' And she learned that even small snails can have big adventures with a little help from friends.\"\n    },\n    {\n      \"content\": \"Leo the Lion was scared of the dark! Every night, he hid under his bed. Then, one night, a tiny firefly blinked outside his window. 'Hello?' Leo whispered. The firefly winked again and flew into Leo's room, lighting it with a soft glow. Leo smiled. 'You're not scary at all!' From that day on, Leo and the firefly were best friends, and Leo wasn't afraid of the dark anymore. A little light can chase away any fear.\"\n    }\n  ]\n}\n```"},
       ],
     },
   ],
