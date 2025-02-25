@@ -51,7 +51,7 @@ const AppSidebar = () => {
           <div>
             <div className='flex items-center w-full justify-center pt-5 text-neutral-800'>
               <Image
-                src={"/logo.svg"}
+                src="/logo.svg"
                 alt='logo image'
                 width={40}
                 height={40}
@@ -64,9 +64,9 @@ const AppSidebar = () => {
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupContent>
-              <div className='mx-5 mt-10'>
+              <Link href="/create-new-video" className='mt-10'>
                 <Button className="text-lg text-center w-full">+Create Video</Button>
-              </div>
+              </Link>
               <SidebarMenu>
                 {MenuItems.map((menu, index) => (
                   <SidebarMenuItem className="mt-3" key={index}>
@@ -90,7 +90,7 @@ const AppSidebar = () => {
           <div className='border rounded-xl m-6 p-3 bg-slate-300'>
             <div className='flex justify-between items-center text-lg'>
               <Gem />
-              <h2>{user?.credits}</h2>
+              <h2>{user?.credits} Credits</h2>
             </div>
             <Button className="w-full mt-3">Buy more Credits</Button>
           </div>
