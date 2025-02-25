@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Topic from './_components/Topic';
+import VideoStyles from './_components/VideoStyles';
 
 const CreateNewVideo = () => {
 
@@ -21,13 +22,14 @@ const CreateNewVideo = () => {
           {/* Topic */}
           <Topic onHandleInputChange={onHandleInputChange} />
           {/* Video Images */}
-
+          <VideoStyles onHandleInputChange={onHandleInputChange}/>
           {/* Voice over */}
 
           {/* Cations */}
         </div>
         <div className="col-span-1">
-
+          {/* creacted vudeo */}
+          
         </div>
       </div>
 
