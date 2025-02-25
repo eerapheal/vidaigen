@@ -34,6 +34,25 @@ const Suggestions = [
 const Topic = ({ onHandleInputChange }) => {
   const [selectedTopic, setSelectedTopic] = useState(null);
 
+  const HandleGenerateScripts = async () => {
+    if (!selectedTopic) {
+      console.error("No topic selected!");
+      alert("Please select a topic before generating scripts.");
+      return;
+    }
+
+    try {
+      const data = await axios.post("/api/generate-script", {
+        topic: selectedTopic,
+      });
+      console.log("Scripts generated:", data);
+      // Handle the generated scripts (e.g., display them in the UI)
+    } catch (error) {
+      console.error("Error generating scripts:", error.response?.data || error.message);
+      alert("Failed to generate scripts. Please try again later.");
+    }
+  };
+
   return (
     <div>
       <div>
@@ -80,6 +99,12 @@ const Topic = ({ onHandleInputChange }) => {
           </TabsContent>
         </Tabs>
       </div>
+      <Button className="text-lg my-2 font-medium p-5 bg-blue-800"
+        onClick={HandleGenerateScripts}
+      >
+        <WandSparklesIcon />
+        Generate Scripts
+      </Button>
     </div>
   );
 };
