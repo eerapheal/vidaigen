@@ -9,7 +9,23 @@ const HeaderApp = () => {
   return (
     <div className='flex justify-between items-center p-3'>
       <SidebarTrigger />
-      <Image src={user?.pictureURL} alt="user logo" width={40} height={40} className='rounded-full' />
+      {user?.pictureURL ? (
+  <Image
+    src={user.pictureURL}
+    alt="user logo"
+    width={40}
+    height={40}
+    className='rounded-full'
+  />
+) : (
+  <Image
+    src="/logo.svg" // Path to your default profile image
+    alt="default user logo"
+    width={40}
+    height={40}
+    className='rounded-full'
+  />
+)}
     </div>
   )
 }
