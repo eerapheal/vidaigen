@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import GenerateScripts from './GenerateScripts';
 import axios from 'axios';
-import { WandSparklesIcon } from 'lucide-react';
+import { Loader2Icon, WandSparklesIcon } from 'lucide-react';
 
 const Suggestions = [
   "Historic Stories",
@@ -33,39 +33,39 @@ const Suggestions = [
 
 const Topic = ({ onHandleInputChange }) => {
   const [selectedTopic, setSelectedTopic] = useState(null);
+  const [scripts, setScripts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const HandleGenerateScripts = async () => {
     if (!selectedTopic) {
       console.error("No topic selected!");
-      alert("Please select a topic before generating scripts.");
       return;
     }
+    setLoading(true);
 
     try {
-      const data = await axios.post("/api/generate-script", {
+      const result = await axios.post("/api/generate-script", {
         topic: selectedTopic,
       });
-      console.log("Scripts generated:", data);
-      // Handle the generated scripts (e.g., display them in the UI)
+      console.log("Scripts generated:", result?.data);
+      setScripts(result.data?.scripts);
     } catch (error) {
       console.error("Error generating scripts:", error.response?.data || error.message);
       alert("Failed to generate scripts. Please try again later.");
     }
+    setLoading(false);
   };
 
   return (
     <div>
       <div>
-        <h2
-          className="mb-2">Video Title
-        </h2>
+        <h2 className="mb-2">Video Title</h2>
         <Input
           placeholder="Enter Video Title"
           onChange={(e) => onHandleInputChange("title", e.target.value)}
         />
         <div className="mt-2">
           <h2 className="mb-2">Video Topic</h2>
-          <p className="">Select Topic</p>
         </div>
         <Tabs defaultValue="suggestions" className="w-full mt-2">
           <TabsList>
@@ -81,8 +81,8 @@ const Topic = ({ onHandleInputChange }) => {
                     }`}
                   key={index}
                   onClick={() => {
-                    setSelectedTopic(suggestion)
-                    onHandleInputChange("topic", suggestion)
+                    setSelectedTopic(suggestion);
+                    onHandleInputChange("topic", suggestion);
                   }}
                 >
                   {suggestion}
@@ -98,11 +98,22 @@ const Topic = ({ onHandleInputChange }) => {
             />
           </TabsContent>
         </Tabs>
+        {scripts?.length > 0 && (
+          <div className='grid grid-cols-2 gap-3 p-2'>
+            {scripts?.map((item, index) => (
+              <div key={index}>
+                <p>{item.content}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <Button className="text-lg my-2 font-medium p-5 bg-blue-800"
         onClick={HandleGenerateScripts}
+        disabled={loading}
       >
-        <WandSparklesIcon />
+        {loading ? <Loader2Icon className='animate-spin' /> :
+          <WandSparklesIcon />}
         Generate Scripts
       </Button>
     </div>
