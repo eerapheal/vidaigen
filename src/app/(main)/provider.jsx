@@ -7,27 +7,30 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 function DashboardProvider({ children }) {
- 
-  const {user} = useAuthContext();
+
+  const { user } = useAuthContext();
   const route = useRouter();
 
   useEffect(() => {
-  user && CheckedUserAuthenticated()
-  },[!user]);
+    user && CheckedUserAuthenticated()
+  }, [!user]);
 
   const CheckedUserAuthenticated = () => {
     if (!user) {
       route.replace("/");
     }
     return null;
-  }
+  };
+  
   return (
     <div>
       <SidebarProvider>
         <AppSidebar />
         <div className="w-full">
           <HeaderApp />
-          {children}
+          <div className="m-6">
+            {children}
+          </div>
         </div>
       </SidebarProvider>
     </div>
