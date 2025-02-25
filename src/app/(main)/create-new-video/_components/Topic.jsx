@@ -20,7 +20,7 @@ const Suggestions = [
   "Smart Cities",
   "Augmented Reality",
   "Motivational Stories",
-  "Blockchain Technology",
+  "love and emotions",
   "Robotics Revolution",
   "Ocean Conservation",
   "Mental Health",
@@ -28,13 +28,16 @@ const Suggestions = [
   "Food Sustainability",
   "Digital Transformation",
   "Horror Stories",
-  "Biometric Authentication"
+  "Biometric Authentication",
+  "Relationships",
+  "Scatty Ytee"
 ];
 
 const Topic = ({ onHandleInputChange }) => {
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [scripts, setScripts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedScriptIndex, setSelectedScriptIndex] = useState();
 
   const HandleGenerateScripts = async () => {
     if (!selectedTopic) {
@@ -42,6 +45,7 @@ const Topic = ({ onHandleInputChange }) => {
       return;
     }
     setLoading(true);
+    setSelectedScriptIndex(null)
 
     try {
       const result = await axios.post("/api/generate-script", {
@@ -99,23 +103,35 @@ const Topic = ({ onHandleInputChange }) => {
           </TabsContent>
         </Tabs>
         {scripts?.length > 0 && (
-          <div className='grid grid-cols-2 gap-3 p-2'>
-            {scripts?.map((item, index) => (
-              <div key={index}>
-                <p>{item.content}</p>
-              </div>
-            ))}
+          <div className="m-2">
+            <h2>Select a Script</h2>
+            <div className='grid grid-cols-2 gap-3 p-2 cursor-pointer'>
+              {scripts?.map((item, index) => (
+                <div
+                  key={index}
+                  className={`border rounded p-1
+                  ${selectedScriptIndex === index ? "bg-slate-300 text-black" : ""}
+                `}
+                  onClick={() => setSelectedScriptIndex(index)}
+                >
+
+                  <p className='line-clamp-5 font-[300px] text-[12px]'>{item.content}</p>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
-      <Button className="text-lg my-2 font-medium p-5 bg-blue-800"
-        onClick={HandleGenerateScripts}
-        disabled={loading}
-      >
-        {loading ? <Loader2Icon className='animate-spin' /> :
-          <WandSparklesIcon />}
-        Generate Scripts
-      </Button>
+      {scripts.length === 0 &&
+        <Button className="text-lg my-2 font-medium p-5 bg-blue-800"
+          onClick={HandleGenerateScripts}
+          disabled={loading}
+        >
+          {loading ? <Loader2Icon className='animate-spin' /> :
+            <WandSparklesIcon />}
+          Generate Scripts
+        </Button>
+      }
     </div>
   );
 };
