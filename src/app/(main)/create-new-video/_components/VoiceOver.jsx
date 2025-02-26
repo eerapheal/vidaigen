@@ -56,7 +56,7 @@ const options = [
   },
 ];
 
-const VoiceOver = () => {
+const VoiceOver = ({ onHandleInputChange }) => {
 
   const [selectedVoiceOver, setSelectedVoiceOver] = useState();
 
@@ -72,7 +72,7 @@ const VoiceOver = () => {
                 key={index}
                 onClick={() => {
                   setSelectedVoiceOver()
-                  onHandleInputChange("voiceOver", option.name)
+                  onHandleInputChange("voice", option.name)
                 }}
                 className=' cursor-pointer'>
                 <h3 className={` cursor-pointer bg-slate-800 p-2 m-1 hover:border rounded
