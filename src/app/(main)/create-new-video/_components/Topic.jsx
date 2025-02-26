@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
-import GenerateScripts from './GenerateScripts';
 import axios from 'axios';
 import { Loader2Icon, WandSparklesIcon } from 'lucide-react';
 
