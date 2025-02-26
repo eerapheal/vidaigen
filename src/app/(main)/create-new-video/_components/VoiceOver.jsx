@@ -71,10 +71,10 @@ const VoiceOver = ({ onHandleInputChange }) => {
               <div
                 key={index}
                 onClick={() => {
-                  setSelectedVoiceOver()
+                  setSelectedVoiceOver(option.name);
                   onHandleInputChange("voice", option.name)
                 }}
-                className=' cursor-pointer'>
+                className={`cursor-pointer shadow-lg text-center rounded-lg ${option.styles} ${option.name === selectedVoiceOver ? 'bg-slate-700' : ''}`}>
                 <h3 className={` cursor-pointer bg-slate-800 p-2 m-1 hover:border rounded
               ${option.name === selectedVoiceOver ? 'border' : ""}
               `}

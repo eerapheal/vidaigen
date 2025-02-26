@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Topic from './_components/Topic';
 import VideoStyles from './_components/VideoStyles';
 import VoiceOver from './_components/VoiceOver';
+import Caption from './_components/Caption';
 
 const CreateNewVideo = () => {
 
@@ -25,8 +26,9 @@ const CreateNewVideo = () => {
           {/* Video Images */}
           <VideoStyles onHandleInputChange={onHandleInputChange} />
           {/* Voice over */}
-          <VoiceOver />
+          <VoiceOver  onHandleInputChange={onHandleInputChange} />
           {/* Cations */}
+          <Caption  onHandleInputChange={onHandleInputChange} />
         </div>
         <div className="col-span-1">
           {/* creacted vudeo */}
