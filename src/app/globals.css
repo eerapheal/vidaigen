@@ -95,6 +95,27 @@ body {
   font-size: 5rem; /* Increases the icon size */
 }
 
+/* Hide scrollbar by default */
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0.5em;
+  background-color: transparent;
+}
+
+/* Show scrollbar on hover */
+.hide-scrollbar:hover::-webkit-scrollbar {
+  background-color: #f1f1f1;
+  border-radius: 96px;
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.hide-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 400px;
+}
+
 @layer base {
   * {
     @apply border-border;
