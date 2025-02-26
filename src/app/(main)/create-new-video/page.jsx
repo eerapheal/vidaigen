@@ -4,6 +4,8 @@ import Topic from './_components/Topic';
 import VideoStyles from './_components/VideoStyles';
 import VoiceOver from './_components/VoiceOver';
 import Caption from './_components/Caption';
+import { Button } from '@/components/ui/button';
+import { WandSparkles } from 'lucide-react';
 
 const CreateNewVideo = () => {
 
@@ -26,9 +28,13 @@ const CreateNewVideo = () => {
           {/* Video Images */}
           <VideoStyles onHandleInputChange={onHandleInputChange} />
           {/* Voice over */}
-          <VoiceOver  onHandleInputChange={onHandleInputChange} />
+          <VoiceOver onHandleInputChange={onHandleInputChange} />
           {/* Cations */}
-          <Caption  onHandleInputChange={onHandleInputChange} />
+          <Caption onHandleInputChange={onHandleInputChange} />
+          {/* Submit */}
+          <Button className="w-full  mt-3 px-6 py-3 text-white bg-blue-700 rounded-md hover:bg-blue-500">
+            <WandSparkles /> Generate Video
+          </Button>
         </div>
         <div className="col-span-1">
           {/* creacted vudeo */}
