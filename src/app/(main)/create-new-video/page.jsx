@@ -6,6 +6,7 @@ import VoiceOver from './_components/VoiceOver';
 import Caption from './_components/Caption';
 import { Button } from '@/components/ui/button';
 import { WandSparkles } from 'lucide-react';
+import Preview from './_components/Preview';
 
 const CreateNewVideo = () => {
 
@@ -21,7 +22,7 @@ const CreateNewVideo = () => {
   return (
     <div>
       <h2 className="">Create New Video</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 mt-8 gap-8">
         <div className="col-span-2 p-7 rounded-lg border h-[79vh] overflow-auto hide-scrollbar">
           {/* Topic */}
           <Topic onHandleInputChange={onHandleInputChange} />
@@ -37,7 +38,8 @@ const CreateNewVideo = () => {
           </Button>
         </div>
         <div className="col-span-1">
-          {/* creacted vudeo */}
+          {/* Preview video */}
+          <Preview formData={formData} />
         </div>
       </div>
     </div>
