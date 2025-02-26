@@ -1,4 +1,5 @@
-import React from 'react'
+import { ScrollArea } from '@/components/ui/scroll-area';
+import React, { useState } from 'react'
 
 const options = [
   {
@@ -56,25 +57,33 @@ const options = [
 ];
 
 const VoiceOver = () => {
+
+  const [selectedVoiceOver, setSelectedVoiceOver] = useState();
+
   return (
     <div>
       <h2 className='mt-3'>Voice Over</h2>
-      <p className='m-1'>Select Video Style</p>
-      <div className='grid grid-cols-2 gap-1 mt-3'>
-        {
-          options.map((option, index) => (
-            <div
-              key={index}
-              onClick={() => {
-                setSelectedStyle()
-                onHandleInputChange("videoStyle", option.name)
-              }}
-              className=' cursor-pointer'>
-              <h3 className=' cursor-pointer bg-slate-800'> {option.name}</h3>
-            </div>
-          ))
-        }
-      </div>
+      <p className='m-1'>Select Voice Over</p>
+      <ScrollArea className="h-[160px] w-full rounded-md border p-4">
+        <div className='grid grid-cols-2 lg:grid-cols-3 gap-1 mt-3'>
+          {
+            options.map((option, index) => (
+              <div
+                key={index}
+                onClick={() => {
+                  setSelectedVoiceOver()
+                  onHandleInputChange("voiceOver", option.name)
+                }}
+                className=' cursor-pointer'>
+                <h3 className={` cursor-pointer bg-slate-800 p-2 m-1 hover:border rounded
+              ${option.name === selectedVoiceOver ? 'border' : ""}
+              `}
+                > {option.name}</h3>
+              </div>
+            ))
+          }
+        </div>
+      </ScrollArea>
     </div>
   )
 }

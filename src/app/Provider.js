@@ -35,7 +35,7 @@ const Provider = ({ children }) => {
       <AuthContext.Provider value={{ user }}>
         <NextThemesProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >

@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import axios from 'axios';
 import { Loader2Icon, WandSparklesIcon } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const Suggestions = [
   "Historic Stories",
@@ -76,22 +77,24 @@ const Topic = ({ onHandleInputChange }) => {
             <TabsTrigger value="your_topic">Your Topic</TabsTrigger>
           </TabsList>
           <TabsContent value="suggestions">
-            <div>
-              {Suggestions.map((suggestion, index) => (
-                <Button
-                  variant="outline"
-                  className={`border p-1 m-1 rounded ${suggestion === selectedTopic ? "bg-slate-300 text-black" : "bg-transparent text-slate-50"
-                    }`}
-                  key={index}
-                  onClick={() => {
-                    setSelectedTopic(suggestion);
-                    onHandleInputChange("topic", suggestion);
-                  }}
-                >
-                  {suggestion}
-                </Button>
-              ))}
-            </div>
+            <ScrollArea className="h-[200px] w-full rounded-md border p-3 m-2">
+              <div>
+                {Suggestions.map((suggestion, index) => (
+                  <Button
+                    variant="outline"
+                    className={`border p-1 m-1 rounded ${suggestion === selectedTopic ? "bg-slate-300 text-black" : "bg-transparent text-slate-50"
+                      }`}
+                    key={index}
+                    onClick={() => {
+                      setSelectedTopic(suggestion);
+                      onHandleInputChange("topic", suggestion);
+                    }}
+                  >
+                    {suggestion}
+                  </Button>
+                ))}
+              </div>
+            </ScrollArea>
           </TabsContent>
           <TabsContent value="your_topic">
             <p className="text-gray-500">Enter Your Topic here </p>
