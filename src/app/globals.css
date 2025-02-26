@@ -78,6 +78,23 @@ body {
   }
 }
 
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(360deg);
+  }
+}
+
+.animate-float {
+  animation: float 5s linear infinite;
+  font-size: 5rem; /* Increases the icon size */
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -97,3 +114,4 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
