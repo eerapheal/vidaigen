@@ -2,7 +2,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-const options = [
+export const options = [
   {
     name: 'Realistic',
     image: '/hummingbird.jpg',
@@ -65,9 +65,8 @@ const VideoStyles = ({ onHandleInputChange }) => {
           {options.map((option, index) => (
             <div
               key={index}
-              className={`relative cursor-pointer ${
-                option.name === selectedStyle ? 'bg-slate-700 rounded-lg p-2' : ''
-              }`}
+              className={`relative cursor-pointer ${option.name === selectedStyle ? 'bg-slate-700 rounded-lg p-2' : ''
+                }`}
               onClick={() => {
                 setSelectedStyle(option.name);
                 onHandleInputChange('videoStyle', option.name);
@@ -78,9 +77,8 @@ const VideoStyles = ({ onHandleInputChange }) => {
                 alt={option.name}
                 width={500}
                 height={120}
-                className={`object-cover rounded shadow-2xl h-[90px] lg:h-[120px] xl:h-[180px] ${
-                  option.name === selectedStyle ? 'border border-slate-400' : 'hover:border border-slate-400'
-                }`}
+                className={`object-cover rounded shadow-2xl h-[90px] lg:h-[120px] xl:h-[180px] ${option.name === selectedStyle ? 'border border-slate-400' : 'hover:border border-slate-400'
+                  }`}
               />
               <h3 className="absolute bottom-[80px] text-center w-full text-slate-50">{option.name}</h3>
             </div>

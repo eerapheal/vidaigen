@@ -1,7 +1,7 @@
 import { ScrollArea } from '@/components/ui/scroll-area';
 import React, { useState } from 'react'
 
-const options = [
+export const caption = [
   {
     name: "Roboto",
     styles: "font-roboto italic text-red-600",
@@ -94,7 +94,7 @@ const Caption = ({ onHandleInputChange }) => {
       <ScrollArea className="h-[160px] w-full mt-2 rounded-md border">
         <div className='grid grid-cols-2 lg:grid-cols-3 gap-1'>
           {
-            options.map((option, index) => (
+            caption.map((option, index) => (
               <div
                 key={index}
                 onClick={() => {
