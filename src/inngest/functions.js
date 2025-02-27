@@ -1,5 +1,5 @@
 import { inngest } from "./client";
-import axios from "axios"
+import axios from "axios";
 
 const BASE_URL = "https://aigurulab.tech";
 
@@ -17,12 +17,10 @@ export const GenerateVideoData = inngest.createFunction(
   { event: "generate-video-data" },
 
   async ({ event, step }) => {
-    const  {script, topic, title, caption, videoStyle, voice} = event?.data;
+    const { script, topic, title, caption, videoStyle, voice } = event?.data;
 
     // generate mp3 file
-    const GenerateAudioFile = await step.run(
-      "GenerateAudioFile", 
-      async () => {
+    const GenerateAudioFile = await step.run("GenerateAudioFile", async () => {
       const result = await axios.post(
         BASE_URL + "/api/text-to-speech",
         {
