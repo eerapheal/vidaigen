@@ -45,7 +45,7 @@ const Topic = ({ onHandleInputChange }) => {
       return;
     }
     setLoading(true);
-    setSelectedScriptIndex(null)
+    setSelectedScriptIndex(null);
 
     try {
       const result = await axios.post("/api/generate-script", {
@@ -58,6 +58,11 @@ const Topic = ({ onHandleInputChange }) => {
       alert("Failed to generate scripts. Please try again later.");
     }
     setLoading(false);
+  };
+
+  const handleScriptSelection = (index) => {
+    setSelectedScriptIndex(index);
+    onHandleInputChange("script", scripts[index].content);
   };
 
   return (
@@ -100,7 +105,7 @@ const Topic = ({ onHandleInputChange }) => {
             <p className="text-gray-500">Enter Your Topic here </p>
             <Textarea
               placeholder="Enter your topic"
-              onChange={(e) => onHandleInputChange("topic", e.target.value)}
+              onChange={(event) => onHandleInputChange("topic", event.target.value)}
             />
           </TabsContent>
         </Tabs>
@@ -114,9 +119,8 @@ const Topic = ({ onHandleInputChange }) => {
                   className={`border rounded p-1
                   ${selectedScriptIndex === index ? "bg-slate-300 text-black" : ""}
                 `}
-                  onClick={() => setSelectedScriptIndex(index)}
+                  onClick={() => handleScriptSelection(index)}
                 >
-
                   <p className='line-clamp-5 font-[300px] text-[12px]'>{item.content}</p>
                 </div>
               ))}
