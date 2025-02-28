@@ -13,15 +13,15 @@ const Hero = () => {
         <Image
           src="/logo.svg"
           alt="Background"
-          fill 
-          priority 
+          fill
+          priority
           className="opacity-10 object-cover"
         />
       </div>
 
       {/* Heading */}
-      <h1 className='relative font-bold text-5xl text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-orange-500 to-pink-500 mb-4'>
-        AI Short Video Generator for YouTube, Reels, and TikTok
+      <h1 className='relative font-bold text-4xl text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-orange-500 to-pink-500 mb-4'>
+        AI Short Video Generator forYouTube, Reels, and TikTok
       </h1>
 
       {/* Subheading */}
@@ -32,9 +32,9 @@ const Hero = () => {
 
       {/* Buttons */}
       <div className='relative flex gap-10 mt-11'>
-        <Button className="text-lg font-medium p-5 bg-blue-800">Get Started</Button>
+        <Button className="text-lg font-medium p-5 bg-blue-800">🔍 Discover 🚀</Button>
         <Authentication>
-          <Button variant="outline" className="text-lg font-medium p-5 text-blue-800">Get Started for free</Button>
+          <Button variant="outline" className="text-lg font-medium p-5 text-blue-800">✅Get Started for free</Button>
         </Authentication>
       </div>
 

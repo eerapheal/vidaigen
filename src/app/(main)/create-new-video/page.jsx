@@ -8,11 +8,16 @@ import { Button } from '@/components/ui/button';
 import { WandSparkles } from 'lucide-react';
 import Preview from './_components/Preview';
 import axios from "axios"
+import { useMutation } from 'convex/react';
+import { api } from '../../../../convex/_generated/api';
+import { useAuthContext } from '@/app/Provider';
 
 const CreateNewVideo = () => {
 
+const { user }  = useAuthContext();
   const [formData, setFormData] = useState();
-
+  const CreateInitialVideoRecord = useMutation(api.videoData.CreateVideoData);
+  console.log(user?._id);
   const onHandleInputChange = (fieldName, fieldValue) => {
     setFormData(prev => ({
       ...prev,
@@ -26,15 +31,26 @@ const CreateNewVideo = () => {
       console.log("error", "enter all fields");
       return;
     }
-  
-    try {
-      const result = await axios.post('/api/inngest/generate-video-data', {
-        ...formData
-      });
-      console.log(result);
-    } catch (error) {
-      console.error("Error generating video:", error);
-    }
+
+    const resp = await CreateInitialVideoRecord({
+      title: formData.title,
+      topic: formData.topic,
+      script: formData.script,
+      videoStyle: formData.videoStyle,
+      voice: formData.voice,
+      caption: formData.caption,
+      uid: user?._id,
+      createdBy: user?.email
+    })
+console.log(resp)
+    // try {
+    //   const result = await axios.post('/api/inngest/generate-video-data', {
+    //     ...formData
+    //   });
+    //   console.log(result);
+    // } catch (error) {
+    //   console.error("Error generating video:", error);
+    // }
   };
 
   return (
@@ -51,9 +67,9 @@ const CreateNewVideo = () => {
           {/* Cations */}
           <Caption onHandleInputChange={onHandleInputChange} />
           {/* Submit */}
-          <Button 
-          className="w-full  mt-3 px-6 py-3 text-white bg-blue-700 rounded-md hover:bg-blue-500"
-          onClick={GenerateVideo}
+          <Button
+            className="w-full  mt-3 px-6 py-3 text-white bg-blue-700 rounded-md hover:bg-blue-500"
+            onClick={GenerateVideo}
           >
             <WandSparkles /> Generate Video
           </Button>

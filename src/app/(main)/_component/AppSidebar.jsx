@@ -45,11 +45,12 @@ const AppSidebar = () => {
   const path = usePathname();
   const {user} = useAuthContext();
   return (
-    <div className="">
-      <Sidebar className="">
+    <div>
+      <Sidebar>
         <SidebarHeader>
           <div>
             <div className='flex items-center w-full justify-center pt-5 text-neutral-800'>
+              <Link href='/' className='flex items-center'>
               <Image
                 src="/logo.svg"
                 alt='logo image'
@@ -57,6 +58,7 @@ const AppSidebar = () => {
                 height={40}
               />
               <h2 className='text-3xl font-bold text-neutral-800'>SyllaAI</h2>
+              </Link>
             </div>
             <h2 className='text-lg text-center mt-4'>AI Video Generator</h2>
           </div>
@@ -65,7 +67,7 @@ const AppSidebar = () => {
           <SidebarGroup>
             <SidebarGroupContent>
               <Link href="/create-new-video" className='mt-10'>
-                <Button className="text-lg text-center w-full">+Create Video</Button>
+                <Button className="text-lg text-center w-full">🎯 Create Video</Button>
               </Link>
               <SidebarMenu>
                 {MenuItems.map((menu, index) => (
@@ -85,6 +87,7 @@ const AppSidebar = () => {
             </SidebarGroupContent>
           </SidebarGroup>
           <SidebarGroup />
+          <h1 className="text-center font-bold text-[#f72bc7] text-2xl">Inspired By <br />Sylla & Aisha Rupees</h1>
         </SidebarContent>
         <SidebarFooter>
           <div className='border rounded-xl m-6 p-3 bg-slate-300'>
