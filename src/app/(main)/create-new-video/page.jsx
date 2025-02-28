@@ -5,7 +5,7 @@ import VideoStyles from './_components/VideoStyles';
 import VoiceOver from './_components/VoiceOver';
 import Caption from './_components/Caption';
 import { Button } from '@/components/ui/button';
-import { WandSparkles } from 'lucide-react';
+import { Loader2Icon, WandSparkles } from 'lucide-react';
 import Preview from './_components/Preview';
 import axios from "axios"
 import { useMutation } from 'convex/react';
@@ -14,8 +14,9 @@ import { useAuthContext } from '@/app/Provider';
 
 const CreateNewVideo = () => {
 
-const { user }  = useAuthContext();
+  const { user } = useAuthContext();
   const [formData, setFormData] = useState();
+  const [loading, setLoading] = useState(false);
   const CreateInitialVideoRecord = useMutation(api.videoData.CreateVideoData);
   console.log(user?._id);
   const onHandleInputChange = (fieldName, fieldValue) => {
@@ -25,32 +26,34 @@ const { user }  = useAuthContext();
     }))
     console.log(formData)
   }
-
   const GenerateVideo = async () => {
     if (!formData?.script || !formData?.topic || !formData?.title || !formData?.caption || !formData?.videoStyle || !formData?.voice) {
       console.log("error", "enter all fields");
       return;
     }
+    setLoading(true)
 
-    const resp = await CreateInitialVideoRecord({
-      title: formData.title,
-      topic: formData.topic,
-      script: formData.script,
-      videoStyle: formData.videoStyle,
-      voice: formData.voice,
-      caption: formData.caption,
-      uid: user?._id,
-      createdBy: user?.email
-    })
-console.log(resp)
-    // try {
-    //   const result = await axios.post('/api/inngest/generate-video-data', {
-    //     ...formData
-    //   });
-    //   console.log(result);
-    // } catch (error) {
-    //   console.error("Error generating video:", error);
-    // }
+    try {
+      const resp = await CreateInitialVideoRecord({
+        title: formData.title,
+        topic: formData.topic,
+        script: formData.script,
+        videoStyle: formData.videoStyle,
+        voice: formData.voice,
+        caption: formData.caption,
+        uid: user?._id,
+        createdBy: user?.email
+      })
+      console.log(resp)
+      const result = await axios.post('/api/inngest/generate-video-data', {
+        ...formData
+      });
+      console.log(result);
+    } catch (error) {
+      console.error("Error generating video:", error);
+    }
+    setLoading(false)
+
   };
 
   return (
@@ -70,8 +73,9 @@ console.log(resp)
           <Button
             className="w-full  mt-3 px-6 py-3 text-white bg-blue-700 rounded-md hover:bg-blue-500"
             onClick={GenerateVideo}
+            disabled={loading}
           >
-            <WandSparkles /> Generate Video
+            {loading ? <Loader2Icon className='animate-spin' /> : <WandSparkles />} Generate Video
           </Button>
         </div>
         <div className="col-span-1">
