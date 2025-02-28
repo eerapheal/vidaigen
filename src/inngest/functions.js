@@ -1,8 +1,23 @@
+import { GenerateImageScript } from "../../config/AiModels";
 import { inngest } from "./client";
 import axios from "axios";
 const { createClient } = require("@deepgram/sdk");
 const BASE_URL = "https://aigurulab.tech";
 
+const ImagePromptScript = ` generate image prompts in cinematic style with all the details for each scene in 30 seconds of video; script: {script}
+
+- Just give specifying image prompt depending on the storyline do
+ - Not give camera angle image prompt
+
+- Follow the following schema and JSON data (4.5 images)
+[
+{
+imagePrompt: "",
+sceneContent'<Script Content>'
+}
+],
+
+`;
 export const helloWorld = inngest.createFunction(
   { id: "hello-customer" },
   { event: "test/hello.customer" },
@@ -38,37 +53,43 @@ export const GenerateVideoData = inngest.createFunction(
       return "https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/audio%2F1740764351638.mp3?alt=media&token=59102e81-b52e-48ca-9878-fef6be355d65";
     });
     // generate audio sheep to text
-    const GenerateCaption = await step.run("GenerateCaption", async () => {
-      // STEP 1: Create a Deepgram client using the API key
-      const deepgram = createClient(process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY);
-      // STEP 2: Call the transcribeUrl method with the audio payload and options
-      const { result, error } = await deepgram.listen.prerecorded.transcribeUrl(
-        {
-          url: GenerateAudioFile,
-        },
-        // STEP 3: Configure Deepgram options for audio analysis
-        {
-          model: "nova-3"
-        }
-      );
+    //   const GenerateCaption = await step.run("GenerateCaption", async () => {
+    //     // STEP 1: Create a Deepgram client using the API key
+    //     const deepgram = createClient(process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY);
+    //     // STEP 2: Call the transcribeUrl method with the audio payload and options
+    //     const { result, error } = await deepgram.listen.prerecorded.transcribeUrl(
+    //       {
+    //         url: GenerateAudioFile,
+    //       },
+    //       // STEP 3: Configure Deepgram options for audio analysis
+    //       {
+    //         model: "nova-3"
+    //       }
+    //     );
 
-      if (error) throw error;
-  // STEP 4: Print the results
+    //     if (error) throw error;
+    // // STEP 4: Print the results
 
-      return result.results?.channels[0]?.alternatives[0]?.words;
-    });
+    //     return result.results?.channels[0]?.alternatives[0]?.words;
+    //   });
 
     // generate prompts for image
-    // const GenerateImagePrompt = await step.run(
-    //   "GenerateImagePrompt",
-    //   async () => {
-    //     return result.data.audio;
-    //   }
-    // );
+    const GenerateImagePrompt = await step.run(
+      "GenerateImagePrompt",
+      async () => {
+        const FINAL_PROMPT = ImagePromptScript.replace(
+          "{style}",
+          videoStyle
+        ).replace("script", script);
+        const result = await GenerateImageScript.sendMessage(FINAL_PROMPT);
+        const resp = JSON.parse(result.response.text());
+        return resp;
+      }
+    );
     //  generate image using AI
 
     // save all data to database
 
-    return GenerateCaption;
+    return GenerateImagePrompt;
   }
 );
