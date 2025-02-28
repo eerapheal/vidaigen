@@ -10,18 +10,21 @@ const Provider = ({ children }) => {
   const [user, setUser] = useState(null);
   const CreateUser = useMutation(api.users.CreateNewUsers);
 
-
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged (
+    const unsubscribe = onAuthStateChanged(
       auth,
-      async(user) => {
-        setUser(user);
-        const result= await CreateUser({
-            name: user.displayName,
-            email: user.email,
-            pictureURL: user.photoURL,
-        });
-        setUser(result);
+      async (firebaseUser) => {
+        if (firebaseUser) {
+          const result = await CreateUser({
+            name: firebaseUser.displayName,
+            email: firebaseUser.email,
+            pictureURL: firebaseUser.photoURL,
+          });
+          console.log("User after mutation:", result); // Log the result
+          setUser(result);
+        } else {
+          setUser(null);
+        }
       },
       (error) => {
         console.error("Authentication error:", error);
@@ -32,16 +35,16 @@ const Provider = ({ children }) => {
   }, []);
 
   return (
-      <AuthContext.Provider value={{ user }}>
-        <NextThemesProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </NextThemesProvider>
-      </AuthContext.Provider>
+    <AuthContext.Provider value={{ user }}>
+      <NextThemesProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        {children}
+      </NextThemesProvider>
+    </AuthContext.Provider>
   );
 };
 export const useAuthContext = () => {
