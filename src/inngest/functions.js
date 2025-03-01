@@ -1,6 +1,9 @@
 import { GenerateImageScript } from "../../config/AiModels";
 import { inngest } from "./client";
 import axios from "axios";
+import { api } from "../../convex/_generated/api";
+const { ConvexHttpClient } = require("convex/browser");
+
 const { createClient } = require("@deepgram/sdk");
 const BASE_URL = "https://aigurulab.tech";
 
@@ -32,8 +35,9 @@ export const GenerateVideoData = inngest.createFunction(
   { event: "generate-video-data" },
 
   async ({ event, step }) => {
-    const { script, topic, title, caption, videoStyle, voice } = event?.data;
-
+    const { script, topic, title, caption, videoStyle, voice, recordId } =
+      event?.data;
+    const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL);
     // generate mp3 file
     const GenerateAudioFile = await step.run("GenerateAudioFile", async () => {
       // const result = await axios.post(
@@ -52,7 +56,9 @@ export const GenerateVideoData = inngest.createFunction(
       // console.log(result.data.audio);
       return "https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/audio%2F1740764351638.mp3?alt=media&token=59102e81-b52e-48ca-9878-fef6be355d65";
     });
-    // generate audio sheep to text
+
+    // generate audio speech to text
+
     //   const GenerateCaption = await step.run("GenerateCaption", async () => {
     //     // STEP 1: Create a Deepgram client using the API key
     //     const deepgram = createClient(process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY);
@@ -74,46 +80,56 @@ export const GenerateVideoData = inngest.createFunction(
     //   });
 
     // generate prompts for image
-    const GenerateImagePrompt = await step.run(
-      "GenerateImagePrompt",
-      async () => {
-        const FINAL_PROMPT = ImagePromptScript.replace(
-          "{style}",
-          videoStyle
-        ).replace("script", script);
-        const result = await GenerateImageScript.sendMessage(FINAL_PROMPT);
-        const resp = JSON.parse(result.response.text());
-        return resp;
-      }
-    );
+    // const GenerateImagePrompt = await step.run(
+    //   "GenerateImagePrompt",
+    //   async () => {
+    //     const FINAL_PROMPT = ImagePromptScript.replace(
+    //       "{style}",
+    //       videoStyle
+    //     ).replace("script", script);
+    //     const result = await GenerateImageScript.sendMessage(FINAL_PROMPT);
+    //     const resp = JSON.parse(result.response.text());
+    //     return resp;
+    //   }
+    // );
     //  generate image using A
-    const GenerateImage = await step.run("generateImage", async () => {
-      let images = [];
-      images = await Promise.all(
-        GenerateImagePrompt.map(async (element) => {
-          const result = await axios.post(
-            BASE_URL + "/api/generate-image",
-            {
-              width: 1024,
-              height: 1024,
-              input: element.imagePrompt,
-              model: "sdxl", //'flux'
-              aspectRatio: "1:1", //Applicable to Flux model only
-            },
-            {
-              headers: {
-                "x-api-key": process.env.NEXT_PUBLIC_AIGURULAB_API_KEY,
-                "Content-Type": "application/json", // Content Type
-              },
-            }
-          );
-          console.log(result.data.image); //Output Result: Base 64 Image
-          return result.data.image;
-        })
-      );
-      return images;
-    });
+    // const GenerateImage = await step.run("generateImage", async () => {
+    //   let images = [];
+    //   images = await Promise.all(
+    //     GenerateImagePrompt.map(async (element) => {
+    //       const result = await axios.post(
+    //         BASE_URL + "/api/generate-image",
+    //         {
+    //           width: 1024,
+    //           height: 1024,
+    //           input: element.imagePrompt,
+    //           model: "sdxl", //'flux'
+    //           aspectRatio: "1:1", //Applicable to Flux model only
+    //         },
+    //         {
+    //           headers: {
+    //             "x-api-key": process.env.NEXT_PUBLIC_AIGURULAB_API_KEY,
+    //             "Content-Type": "application/json", // Content Type
+    //           },
+    //         }
+    //       );
+    //       console.log(result.data.image); //Output Result: Base 64 Image
+    //       return result.data.image;
+    //     })
+    //   );
+    //   return images;
+    // });
     // save all data to database
-    return GenerateImage;
+    const UpdateVideoDataBD = await step.run("SaveVideoDataToBD", async () => {
+      const result = await convex.mutation(api.videoData.UpdateVideoRecord, {
+        recordId: recordId,
+        audioUrl: "",
+        images: [],
+        captionJson: [],
+      });
+      return result;
+    });
+
+    return UpdateVideoDataBD;
   }
 );
