@@ -46,7 +46,8 @@ const CreateNewVideo = () => {
       })
       console.log(resp)
       const result = await axios.post('/api/inngest/generate-video-data', {
-        ...formData
+        ...formData,
+        recordId: resp,
       });
       console.log(result);
     } catch (error) {
