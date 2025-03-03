@@ -13,7 +13,7 @@ function DashboardProvider({ children }) {
 
   useEffect(() => {
     user && CheckedUserAuthenticated()
-  }, [!user]);
+  }, [user]);
 
   const CheckedUserAuthenticated = () => {
     if (!user) {
