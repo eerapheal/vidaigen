@@ -23,7 +23,6 @@ const Provider = ({ children }) => {
               email: firebaseUser.email,
               pictureURL: firebaseUser.photoURL,
             });
-            console.log("User after mutation:", result); // Log the result
             setUser(result);
           }
         } else {

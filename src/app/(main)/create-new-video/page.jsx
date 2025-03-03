@@ -11,6 +11,7 @@ import axios from "axios"
 import { useMutation } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 import { useAuthContext } from '@/app/Provider';
+import { toast } from 'sonner';
 
 const CreateNewVideo = () => {
 
@@ -18,15 +19,17 @@ const CreateNewVideo = () => {
   const [formData, setFormData] = useState();
   const [loading, setLoading] = useState(false);
   const CreateInitialVideoRecord = useMutation(api.videoData.CreateVideoData);
-  console.log(user?._id);
   const onHandleInputChange = (fieldName, fieldValue) => {
     setFormData(prev => ({
       ...prev,
       [fieldName]: fieldValue
     }))
-    console.log(formData)
   }
   const GenerateVideo = async () => {
+    if (user?.credits <= 0) {
+      toast('Please add more credits to continue')
+      return;
+    }
     if (!formData?.script || !formData?.topic || !formData?.title || !formData?.caption || !formData?.videoStyle || !formData?.voice) {
       console.log("error", "enter all fields");
       return;
@@ -45,7 +48,6 @@ const CreateNewVideo = () => {
         createdBy: user?.email,
         credits: user?.credits
       })
-      console.log(resp)
       const result = await axios.post('/api/inngest/generate-video-data', {
         ...formData,
         recordId: resp,
