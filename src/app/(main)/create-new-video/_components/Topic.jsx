@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea"
 import axios from 'axios';
 import { Loader2Icon, WandSparklesIcon } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { toast } from 'sonner';
+import { useAuthContext } from '@/app/Provider';
 
 const Suggestions = [
   "Historic Stories",
@@ -38,12 +40,14 @@ const Topic = ({ onHandleInputChange }) => {
   const [scripts, setScripts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedScriptIndex, setSelectedScriptIndex] = useState();
+  const { user } = useAuthContext();
 
   const HandleGenerateScripts = async () => {
-    if (!selectedTopic) {
-      console.error("No topic selected!");
+    if (user?.credits <= 0) {
+      toast('Please add more credits to continue')
       return;
     }
+
     setLoading(true);
     setSelectedScriptIndex(null);
 
@@ -105,7 +109,11 @@ const Topic = ({ onHandleInputChange }) => {
             <p className="text-gray-500">Enter Your Topic here </p>
             <Textarea
               placeholder="Enter your topic"
-              onChange={(event) => onHandleInputChange("topic", event.target.value)}
+              onChange={(event) => {
+                const topic = event.target.value;
+                setSelectedTopic(topic); // Update selectedTopic state
+                onHandleInputChange("topic", topic); // Update parent component state
+              }}
             />
           </TabsContent>
         </Tabs>
@@ -131,7 +139,7 @@ const Topic = ({ onHandleInputChange }) => {
       {scripts.length === 0 &&
         <Button className="text-lg my-2 font-medium p-5 bg-blue-800"
           onClick={HandleGenerateScripts}
-          disabled={loading}
+          disabled={loading || !selectedTopic}
         >
           {loading ? <Loader2Icon className='animate-spin' /> :
             <WandSparklesIcon />}
