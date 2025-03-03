@@ -52,7 +52,7 @@ export const UpdateVideoRecord = mutation({
   },
 });
 
-export const GetUserVideos = query ({
+export const GetUserVideos = query({
   args: {
     uid: v.id("users"),
   },
@@ -63,6 +63,17 @@ export const GetUserVideos = query ({
       .filter((q) => q.eq(q.field("uid"), args.uid))
       .collect();
 
+    return result;
+  },
+});
+
+export const GetUserVideoById = query({
+  args: {
+    videoId: v.id("videoData"),
+  },
+
+  handler: async (ctx, args) => {
+    const result = await ctx.db.get(args.videoId);
     return result;
   },
 });
