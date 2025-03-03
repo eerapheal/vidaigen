@@ -46,6 +46,7 @@ const VideoList = () => {
   return (
     <div className=' border p-5 border-dashed rounded-lg shadow-lg'>
       {videoList?.length == 0 ?
+
         <div className='flex flex-col mx-16 items-center justify-center mt-20'>
           <Image src='/logo.svg' alt='logo' width={60} height={60} />
           <h2 className='text-xl mt-2 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-orange-500 to-pink-500'>You Don't have any created video. Create one now!!</h2>
@@ -55,8 +56,9 @@ const VideoList = () => {
         </div> :
         <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5'>
           {videoList?.map((items) => (
+                  <Link href={'/play-video/'+items?._id} key={items._id}>
             <div
-              key={items._id}
+              
               className='relative'
             >
               {items?.status === "Completed" ? (
@@ -82,6 +84,7 @@ const VideoList = () => {
                 <h3>{moment(items?._creationTime).fromNow()}</h3>
               </div>
             </div>
+            </Link>
           ))}
         </div>
 
