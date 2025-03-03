@@ -6,6 +6,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { AuthContext } from "./_context/AuthContext";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+
 const Provider = ({ children }) => {
   const [user, setUser] = useState(null);
   const CreateUser = useMutation(api.users.CreateNewUsers);
@@ -15,13 +16,16 @@ const Provider = ({ children }) => {
       auth,
       async (firebaseUser) => {
         if (firebaseUser) {
-          const result = await CreateUser({
-            name: firebaseUser.displayName,
-            email: firebaseUser.email,
-            pictureURL: firebaseUser.photoURL,
-          });
-          console.log("User after mutation:", result); // Log the result
-          setUser(result);
+          // Check if the user is already set in state
+          if (!user || user.email !== firebaseUser.email) {
+            const result = await CreateUser({
+              name: firebaseUser.displayName,
+              email: firebaseUser.email,
+              pictureURL: firebaseUser.photoURL,
+            });
+            console.log("User after mutation:", result); // Log the result
+            setUser(result);
+          }
         } else {
           setUser(null);
         }
@@ -32,7 +36,7 @@ const Provider = ({ children }) => {
     );
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   return (
     <AuthContext.Provider value={{ user }}>
@@ -47,6 +51,7 @@ const Provider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -54,4 +59,5 @@ export const useAuthContext = () => {
   }
   return context;
 };
+
 export default Provider;
