@@ -24,9 +24,15 @@ const RemotionComposition = ({ videoData, setDurationInFrame }) => {
     );
   };
 
+  const getCurrentCaption = () => {
+    const currentTime = frame / 30;
+    let currentCaption = captions?.find((items) => currentTime >= items?.start && currentTime <= items.end)
+    return currentCaption ? currentCaption?.word : ''
+  }
+
   return (
     <div>
-      <AbsoluteFill>
+      <AbsoluteFill className='relative'>
         {imageList?.map((items, index) => {
           const duration = GetDurationFrame();
           const startTime = (index * duration) / imageList?.length;
@@ -47,8 +53,44 @@ const RemotionComposition = ({ videoData, setDurationInFrame }) => {
             </Sequence>
           );
         })}
+        <AbsoluteFill
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+
+            bottom: 40 ,
+            height: 150,
+            textAlign: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background for better readability
+            padding: '20px',
+            borderRadius: '10px',
+          }}
+        >
+          <h2
+            style={{
+              color: 'white',
+              fontSize: '48px',
+              fontWeight: 'bold',
+              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', // Text shadow for better visibility
+              animation: 'fadeInOut 3s infinite', // Example animation
+            }}
+          >
+            {getCurrentCaption()}
+          </h2>
+        </AbsoluteFill>
         {videoData?.audioUrl && <Audio src={videoData?.audioUrl} />}
       </AbsoluteFill>
+
+      {/* Define the animation in a style tag */}
+      <style>
+        {`
+          @keyframes fadeInOut {
+            0% { opacity: 0; }
+            50% { opacity: 5; }
+            100% { opacity: 1; }
+          }
+        `}
+      </style>
     </div>
   );
 };
