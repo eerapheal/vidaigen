@@ -47,6 +47,7 @@ const RemotionComposition = ({ videoData, setDurationInFrame }) => {
             </Sequence>
           );
         })}
+        {videoData?.audioUrl && <Audio src={videoData?.audioUrl} />}
       </AbsoluteFill>
     </div>
   );
