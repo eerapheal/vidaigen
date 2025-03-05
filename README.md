@@ -1,4 +1,3 @@
-```markdown
 # SyllaAI - Generative AI Platform
 [SyllaAI](/logo)
 SyllaAI is an innovative Generative AI platform currently under development, designed to empower users by solving a wide range of problems with cutting-edge AI technology. Built with **React, Next.js, Convex Database, Inngest, Remotion, Generative AI models, and TailwindCSS**, SyllaAI revolutionizes how individuals and businesses create, manage, and optimize their digital content and workflows.
